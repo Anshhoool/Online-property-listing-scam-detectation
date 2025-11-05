@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4 mb-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+
+      <!-- 🏠 Property Title -->
+      <h2 class="mb-3 text-center">{{ listing['title'] }}</h2>
+
+     <!-- 🖼 Bootstrap Carousel for Multiple Images -->
+{% set images = listing['image_gallery'].split(',') if listing['image_gallery'] else [listing['image']] %}
+<div id="propertyCarousel" class="carousel slide shadow-lg rounded overflow-hidden mb-4" data-bs-ride="carousel" style="max-height: 500px;">
+  <div class="carousel-inner">
+    {% for img in images %}
+    <div class="carousel-item {% if loop.first %}active{% endif %}">
+      <img src="{{ img }}" class="d-block w-100" alt="Property Image"
+           style="height:500px;object-fit:cover;filter:brightness(1.05) contrast(1.1);">
+    </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true" style="filter:invert(1);"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true" style="filter:invert(1);"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+      <!-- 📋 Property Info -->
+      <div class="mt-4 p-4 bg-light rounded shadow-sm">
+        <h5 class="text-secondary">Property Details</h5>
+       <p><strong>Price:</strong> €{{ listing['price'] }}</p>
+<p><strong>Beds:</strong> {{ listing['beds'] }} {{ 'Bed' if listing['beds'] == '1' else 'Beds' }}</p>
+<p><strong>Baths:</strong> {{ listing['baths'] }} {{ 'Bath' if listing['baths'] == '1' else 'Baths' }}</p>
+        <p><strong>Description:</strong></p>
+        <p>{{ listing['description'] }}</p>
+      </div>
+
+      <!-- 📧 Contact (Honeytoken) -->
+      <div class="mt-4 p-4 bg-white rounded shadow-sm border">
+        <h5 class="text-danger">Interested? Contact:</h5>
+        <p><a href="mailto:{{ listing['contact_email'] }}">{{ listing['contact_email'] }}</a></p>
+      </div>
+
+      <!-- 🔙 Back to home -->
+      <div class="text-center mt-4">
+        <a href="/" class="btn btn-secondary">← Back to Listings</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

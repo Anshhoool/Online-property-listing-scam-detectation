@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4 mb-5">
+  <h2 class="mb-4 text-center">Edit Property</h2>
+
+  <form method="POST" enctype="multipart/form-data" class="shadow p-4 bg-light rounded">
+    <div class="mb-3">
+      <label>Title</label>
+      <input type="text" name="title" class="form-control" value="{{ listing['title'] }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Price</label>
+      <input type="text" name="price" class="form-control" value="{{ listing['price'] }}">
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label>Beds</label>
+        <input type="text" name="beds" class="form-control" value="{{ listing['beds'] }}">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Baths</label>
+        <input type="text" name="baths" class="form-control" value="{{ listing['baths'] }}">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Description</label>
+      <textarea name="description" class="form-control" rows="3">{{ listing['description'] }}</textarea>
+    </div>
+
+    <!-- 🖼 Show Existing Images -->
+    {% if listing['image_gallery'] %}
+      {% set images = listing['image_gallery'].split(',') %}
+      <div id="editCarousel" class="carousel slide mb-4 shadow rounded overflow-hidden" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for img in images %}
+          <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <img src="{{ img }}" class="d-block w-100" style="height:300px;object-fit:cover;">
+          </div>
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#editCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true" style="filter:invert(1);"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#editCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true" style="filter:invert(1);"></span>
+        </button>
+      </div>
+    {% endif %}
+
+    <!-- 📸 Upload New Images -->
+    <div class="mb-3">
+      <label>Upload New Images (optional)</label>
+      <input type="file" name="images" class="form-control" accept="image/*" multiple>
+      <small class="text-muted">Select new images to replace the current gallery</small>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100 mt-3">Save Changes</button>
+  </form>
+</div>
+
+{% endblock %}
