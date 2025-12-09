@@ -18,15 +18,17 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: ${{ secrets.EC2_KEY }}   # <-- yahan sirf EC2_KEY use kar rahe hain
           port: 22
           script: |
+            cd /home/ubuntu
+
             # 1) Repo folder me jao (ya clone karo agar nahi hai)
             if [ -d "property-defender-frontend" ]; then
               cd property-defender-frontend
               git pull origin main
             else
-              git clone https://github.com/Anshhoool/Online-Property_listing-Defender.git property-defender-frontend
+              git clone https://github.com/Anshhoool/Online-property-listing-scam-detectation.git property-defender-frontend
               cd property-defender-frontend
             fi
 
@@ -34,6 +36,7 @@ jobs:
             if [ ! -d "venv" ]; then
               python3 -m venv venv
             fi
+
             source venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
