@@ -31,9 +31,7 @@ services:
       - elasticsearch
     user: root
     volumes:
-      # filebeat config
       - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      # project logs ko container ke andar mount karo
       - ../logs:/var/log/rentalshield:ro
     command: ["filebeat", "-e", "-strict.perms=false"]
 
