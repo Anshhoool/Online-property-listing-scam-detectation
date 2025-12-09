@@ -1,6 +1,6 @@
 import sqlite3
 
-# Connect (creates file if not exists)
+# Connect - creates file if not exists
 conn = sqlite3.connect('listings.db')
 c = conn.cursor()
 

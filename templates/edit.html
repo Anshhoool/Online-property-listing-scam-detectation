@@ -1,64 +1,79 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container mt-4 mb-5">
-  <h2 class="mb-4 text-center">Edit Property</h2>
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Edit Listing</h2>
 
-  <form method="POST" enctype="multipart/form-data" class="shadow p-4 bg-light rounded">
+  <form method="POST" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+
+    <!-- Title -->
     <div class="mb-3">
       <label>Title</label>
-      <input type="text" name="title" class="form-control" value="{{ listing['title'] }}" required>
+      <input type="text" name="title" class="form-control" value="{{ listing.title }}" required>
     </div>
 
+    <!-- Price -->
     <div class="mb-3">
-      <label>Price</label>
-      <input type="text" name="price" class="form-control" value="{{ listing['price'] }}">
+      <label>Price (€)</label>
+      <input type="number" name="price" class="form-control" value="{{ listing.price }}" required>
     </div>
 
+    <!-- Beds & Baths -->
     <div class="row">
       <div class="col-md-6 mb-3">
         <label>Beds</label>
-        <input type="text" name="beds" class="form-control" value="{{ listing['beds'] }}">
+        <input type="number" name="beds" class="form-control" value="{{ listing.beds }}" required>
       </div>
       <div class="col-md-6 mb-3">
         <label>Baths</label>
-        <input type="text" name="baths" class="form-control" value="{{ listing['baths'] }}">
+        <input type="number" name="baths" class="form-control" value="{{ listing.baths }}" required>
       </div>
     </div>
 
+    <!-- Description -->
     <div class="mb-3">
       <label>Description</label>
-      <textarea name="description" class="form-control" rows="3">{{ listing['description'] }}</textarea>
+      <textarea name="description" class="form-control" rows="3">{{ listing.description }}</textarea>
     </div>
 
-    <!-- 🖼 Show Existing Images -->
-    {% if listing['image_gallery'] %}
-      {% set images = listing['image_gallery'].split(',') %}
-      <div id="editCarousel" class="carousel slide mb-4 shadow rounded overflow-hidden" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          {% for img in images %}
-          <div class="carousel-item {% if loop.first %}active{% endif %}">
-            <img src="{{ img }}" class="d-block w-100" style="height:300px;object-fit:cover;">
-          </div>
-          {% endfor %}
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#editCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true" style="filter:invert(1);"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#editCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true" style="filter:invert(1);"></span>
-        </button>
-      </div>
-    {% endif %}
+    <!-- Address -->
+    <div class="mb-3">
+      <label>Address</label>
+      <input type="text" name="address" class="form-control" value="{{ listing.address }}">
+    </div>
 
-    <!-- 📸 Upload New Images -->
+    <!-- Real Contact Email -->
+    <div class="mb-3">
+      <label>Real Contact Email</label>
+      <input type="email" name="real_contact" class="form-control" value="{{ listing.real_contact }}">
+    </div>
+
+    <!-- Real Contact Phone -->
+    <div class="mb-3">
+      <label>Real Phone Number</label>
+      <input type="text" name="real_phone" class="form-control" value="{{ listing.real_phone }}">
+    </div>
+
+    <!-- Image Upload -->
     <div class="mb-3">
       <label>Upload New Images (optional)</label>
       <input type="file" name="images" class="form-control" accept="image/*" multiple>
-      <small class="text-muted">Select new images to replace the current gallery</small>
+      <small class="text-muted">Leave empty to keep existing images.</small>
     </div>
 
-    <button type="submit" class="btn btn-success w-100 mt-3">Save Changes</button>
+    <!-- Current Gallery Preview -->
+    {% if listing.image_gallery %}
+    <div class="mb-3">
+      <label class="form-label">Current Images:</label>
+      <div class="d-flex flex-wrap gap-2">
+        {% for img in listing.image_gallery.split(',') %}
+        <img src="{{ img }}" style="height:80px; width:120px; object-fit:cover; border-radius:4px;">
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
   </form>
 </div>
 

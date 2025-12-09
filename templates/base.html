@@ -33,19 +33,47 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="/">Online Property Scam Detection</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
-        </ul>
-      </div>
+  <div class="container">
+    <a class="navbar-brand" href="/">Online Property Scam Detection</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+
+        <!-- Home: sab ko dikhega -->
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+
+        {% if is_admin %}
+          <!-- ✅ Sirf Admin ko dikhenge -->
+          <li class="nav-item">
+            <a class="nav-link" href="/admin">Add Property</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/alerts">Alerts</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          </li>
+
+        {% else %}
+          <!-- ✅ Sirf Normal User ko -->
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/login">Admin Login</a>
+          </li>
+        {% endif %}
+
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
+
 
   <div class="container mt-4">
     {% block content %}{% endblock %}
